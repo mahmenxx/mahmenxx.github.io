@@ -451,7 +451,7 @@ body {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 1.75rem;
-    padding-top: 3.25rem;
+    padding-top: 3.5rem;
     transition: var(--transition);
     display: flex;
     flex-direction: column;
@@ -494,11 +494,13 @@ body {
     background: var(--accent-glow);
     border: 1px solid var(--accent);
     border-radius: 20px;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     font-weight: 600;
     color: var(--accent-light);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    white-space: nowrap;
+    z-index: 1;
 }
 
 .project-header {
