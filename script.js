@@ -33,17 +33,19 @@ const observerOptions = {
 };
 
 const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+    entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in');
+            setTimeout(() => {
+                entry.target.classList.add('visible');
+            }, index * 80);
             observer.unobserve(entry.target);
         }
     });
 }, observerOptions);
 
-// Observe all project cards and skill categories
-document.querySelectorAll('.project-card, .skill-category, .highlight').forEach(el => {
-    el.style.opacity = '0';
+// Observe all animated elements
+document.querySelectorAll('.project-card, .skill-category, .highlight, .stat-item').forEach(el => {
+    el.classList.add('fade-in');
     observer.observe(el);
 });
 
@@ -55,5 +57,26 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         if (target) {
             target.scrollIntoView({ behavior: 'smooth' });
         }
+    });
+});
+
+// Interactive card glow effect (follows mouse)
+document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty('--mouse-x', x + '%');
+        card.style.setProperty('--mouse-y', y + '%');
+    });
+});
+
+// Parallax effect on hero orbs
+window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const orbs = document.querySelectorAll('.gradient-orb');
+    orbs.forEach((orb, i) => {
+        const speed = (i + 1) * 0.05;
+        orb.style.transform = `translateY(${scrolled * speed}px)`;
     });
 });
